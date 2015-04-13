@@ -5,16 +5,17 @@
 #
 
 # Pull base image.
-FROM dockerfile/java:oracle-java8
+FROM jeanblanchard/busybox-java
 
-ENV ES_PKG_NAME elasticsearch-1.5.0
+ENV ES_PKG_NAME elasticsearch-1.5.1
 
 # Install Elasticsearch.
 RUN \
   cd / && \
-  wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz && \
-  tar xvzf $ES_PKG_NAME.tar.gz && \
-  rm -f $ES_PKG_NAME.tar.gz && \
+  wget http://download.elastic.co/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz && \
+  gzip -d $ES_PKG_NAME.tar.gz && \ 
+  tar xvf $ES_PKG_NAME.tar && \
+  rm -f $ES_PKG_NAME.tar* && \
   mv /$ES_PKG_NAME /elasticsearch
 
 # Define mountable directories.
